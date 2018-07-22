@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kk.apollo.biz.dao.team.TeamMapper">
+    <resultMap id="BaseResultMap" type="com.kk.apollo.biz.model.team.Team">
+        <id column="team_id" property="teamId" jdbcType="INTEGER"/>
+        <result column="team_name" property="teamName" jdbcType="VARCHAR"/>
+        <result column="team_type" property="teamType" jdbcType="VARCHAR"/>
+        <result column="team_introduction" property="teamIntroduction" jdbcType="VARCHAR"/>
+        <result column="team_activityPlace" property="teamActivityplace" jdbcType="VARCHAR"/>
+        <result column="team_avatar" property="teamAvatar" jdbcType="VARCHAR"/>
+        <result column="team_backImg" property="teamBackimg" jdbcType="VARCHAR"/>
+        <result column="team_email" property="teamEmail" jdbcType="VARCHAR"/>
+        <result column="team_tel" property="teamTel" jdbcType="VARCHAR"/>
+        <result column="team_group" property="teamGroup" jdbcType="VARCHAR"/>
+        <result column="team_require" property="teamRequire" jdbcType="VARCHAR"/>
+        <result column="team_swipImg" property="teamSwipimg" jdbcType="VARCHAR"/>
+        <result column="team_status" property="teamStatus" jdbcType="VARCHAR"/>
+        <result column="team_foundTime" property="teamFoundtime" jdbcType="DATE"/>
+        <result column="team_title" property="teamTitle" jdbcType="VARCHAR"/>
+    </resultMap>
+    <resultMap id="TeamVoResultMap" type="com.kk.apollo.biz.model.team.TeamVo">
+        <id column="team_id" property="teamId" jdbcType="INTEGER"/>
+        <result column="team_name" property="teamName" jdbcType="VARCHAR"/>
+        <result column="team_type" property="teamType" jdbcType="VARCHAR"/>
+        <result column="team_backImg" property="teamBackimg" jdbcType="VARCHAR"/>
+        <result column="team_status" property="teamStatus" jdbcType="VARCHAR"/>
+        <result column="team_title" property="teamTitle" jdbcType="VARCHAR"/>
+        <result column="teamuser_num" property="teamuserNum" jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        team_id, team_name, team_type, team_introduction, team_activityPlace, team_avatar,
+        team_backImg, team_email, team_tel, team_group, team_require, team_swipImg, team_status,
+        team_foundTime, team_title
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from team
+        where team_id = #{teamId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from team
+        where team_id = #{teamId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.kk.apollo.biz.model.team.Team">
+        insert into team (team_id, team_name, team_type,
+        team_introduction, team_activityPlace, team_avatar,
+        team_backImg, team_email, team_tel,
+        team_group, team_require, team_swipImg,
+        team_status, team_foundTime, team_title
+        )
+        values (#{teamId,jdbcType=INTEGER}, #{teamName,jdbcType=VARCHAR}, #{teamType,jdbcType=VARCHAR},
+        #{teamIntroduction,jdbcType=VARCHAR}, #{teamActivityplace,jdbcType=VARCHAR}, #{teamAvatar,jdbcType=VARCHAR},
+        #{teamBackimg,jdbcType=VARCHAR}, #{teamEmail,jdbcType=VARCHAR}, #{teamTel,jdbcType=VARCHAR},
+        #{teamGroup,jdbcType=VARCHAR}, #{teamRequire,jdbcType=VARCHAR}, #{teamSwipimg,jdbcType=VARCHAR},
+        #{teamStatus,jdbcType=VARCHAR}, #{teamFoundtime,jdbcType=DATE}, #{teamTitle,jdbcType=VARCHAR}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.kk.apollo.biz.model.team.Team" keyProperty="teamId"  useGeneratedKeys="true">
+        insert into team
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="teamId != null">
+                team_id,
+            </if>
+            <if test="teamName != null">
+                team_name,
+            </if>
+            <if test="teamType != null">
+                team_type,
+            </if>
+            <if test="teamIntroduction != null">
+                team_introduction,
+            </if>
+            <if test="teamActivityplace != null">
+                team_activityPlace,
+            </if>
+            <if test="teamAvatar != null">
+                team_avatar,
+            </if>
+            <if test="teamBackimg != null">
+                team_backImg,
+            </if>
+            <if test="teamEmail != null">
+                team_email,
+            </if>
+            <if test="teamTel != null">
+                team_tel,
+            </if>
+            <if test="teamGroup != null">
+                team_group,
+            </if>
+            <if test="teamRequire != null">
+                team_require,
+            </if>
+            <if test="teamSwipimg != null">
+                team_swipImg,
+            </if>
+            <if test="teamStatus != null">
+                team_status,
+            </if>
+            <if test="teamFoundtime != null">
+                team_foundTime,
+            </if>
+            <if test="teamTitle != null">
+                team_title,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="teamId != null">
+                #{teamId,jdbcType=INTEGER},
+            </if>
+            <if test="teamName != null">
+                #{teamName,jdbcType=VARCHAR},
+            </if>
+            <if test="teamType != null">
+                #{teamType,jdbcType=VARCHAR},
+            </if>
+            <if test="teamIntroduction != null">
+                #{teamIntroduction,jdbcType=VARCHAR},
+            </if>
+            <if test="teamActivityplace != null">
+                #{teamActivityplace,jdbcType=VARCHAR},
+            </if>
+            <if test="teamAvatar != null">
+                #{teamAvatar,jdbcType=VARCHAR},
+            </if>
+            <if test="teamBackimg != null">
+                #{teamBackimg,jdbcType=VARCHAR},
+            </if>
+            <if test="teamEmail != null">
+                #{teamEmail,jdbcType=VARCHAR},
+            </if>
+            <if test="teamTel != null">
+                #{teamTel,jdbcType=VARCHAR},
+            </if>
+            <if test="teamGroup != null">
+                #{teamGroup,jdbcType=VARCHAR},
+            </if>
+            <if test="teamRequire != null">
+                #{teamRequire,jdbcType=VARCHAR},
+            </if>
+            <if test="teamSwipimg != null">
+                #{teamSwipimg,jdbcType=VARCHAR},
+            </if>
+            <if test="teamStatus != null">
+                #{teamStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="teamFoundtime != null">
+                #{teamFoundtime,jdbcType=DATE},
+            </if>
+            <if test="teamTitle != null">
+                #{teamTitle,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.kk.apollo.biz.model.team.Team">
+        update team
+        <set>
+            <if test="teamName != null">
+                team_name = #{teamName,jdbcType=VARCHAR},
+            </if>
+            <if test="teamType != null">
+                team_type = #{teamType,jdbcType=VARCHAR},
+            </if>
+            <if test="teamIntroduction != null">
+                team_introduction = #{teamIntroduction,jdbcType=VARCHAR},
+            </if>
+            <if test="teamActivityplace != null">
+                team_activityPlace = #{teamActivityplace,jdbcType=VARCHAR},
+            </if>
+            <if test="teamAvatar != null">
+                team_avatar = #{teamAvatar,jdbcType=VARCHAR},
+            </if>
+            <if test="teamBackimg != null">
+                team_backImg = #{teamBackimg,jdbcType=VARCHAR},
+            </if>
+            <if test="teamEmail != null">
+                team_email = #{teamEmail,jdbcType=VARCHAR},
+            </if>
+            <if test="teamTel != null">
+                team_tel = #{teamTel,jdbcType=VARCHAR},
+            </if>
+            <if test="teamGroup != null">
+                team_group = #{teamGroup,jdbcType=VARCHAR},
+            </if>
+            <if test="teamRequire != null">
+                team_require = #{teamRequire,jdbcType=VARCHAR},
+            </if>
+            <if test="teamSwipimg != null">
+                team_swipImg = #{teamSwipimg,jdbcType=VARCHAR},
+            </if>
+            <if test="teamStatus != null">
+                team_status = #{teamStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="teamFoundtime != null">
+                team_foundTime = #{teamFoundtime,jdbcType=DATE},
+            </if>
+            <if test="teamTitle != null">
+                team_title = #{teamTitle,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where team_id = #{teamId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.kk.apollo.biz.model.team.Team">
+        update team
+        set team_name = #{teamName,jdbcType=VARCHAR},
+        team_type = #{teamType,jdbcType=VARCHAR},
+        team_introduction = #{teamIntroduction,jdbcType=VARCHAR},
+        team_activityPlace = #{teamActivityplace,jdbcType=VARCHAR},
+        team_avatar = #{teamAvatar,jdbcType=VARCHAR},
+        team_backImg = #{teamBackimg,jdbcType=VARCHAR},
+        team_email = #{teamEmail,jdbcType=VARCHAR},
+        team_tel = #{teamTel,jdbcType=VARCHAR},
+        team_group = #{teamGroup,jdbcType=VARCHAR},
+        team_require = #{teamRequire,jdbcType=VARCHAR},
+        team_swipImg = #{teamSwipimg,jdbcType=VARCHAR},
+        team_status = #{teamStatus,jdbcType=VARCHAR},
+        team_foundTime = #{teamFoundtime,jdbcType=DATE},
+        team_title = #{teamTitle,jdbcType=VARCHAR}
+        where team_id = #{teamId,jdbcType=INTEGER}
+    </update>
+    <select id="getDepNum" resultType="java.lang.Integer">
+        select
+        COUNT(DISTINCT(department_name))
+        from
+        user_team
+        where
+        team_id = #{0};
+    </select>
+    <select id="getDepName" resultType="java.lang.String">
+        select
+        DISTINCT(department_name)
+        from
+        user_team
+        where
+        team_id = #{0}
+        and
+        department_name !=""
+    </select>
+    <select id="findAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        team
+        where  team_type!= -1
+    </select>
+    <select id="findAllVo" resultMap="TeamVoResultMap">
+        select
+        team.team_id,team_name,team_backImg, team_type,team_status,team_title, count(user_team.team_id) as teamuser_num
+        from
+        team left join user_team on team.team_id = user_team.team_id
+        where  team_type!= -1
+        GROUP by
+        team.team_id,team_name,team_type,team_backImg,team_status,team_title
+
+    </select>
+    <select id="findAllOrderByDesc" resultMap="TeamVoResultMap">
+        select
+        team.team_id,team_name,team_backImg, team_type,team_status,team_title, count(user_team.team_id) as teamuser_num
+        from
+        team left join user_team on team.team_id = user_team.team_id
+        where  team_type!= -1
+        GROUP by
+        team.team_id,team_name,team_type,team_backImg,team_status,team_title
+        ORDER By ${orderBy} desc
+    </select>
+    <select id="findAllOrderByAsc" resultMap="TeamVoResultMap">
+        select
+        team.team_id,team_name,team_backImg, team_type,team_status,team_title, count(user_team.team_id) as teamuser_num
+        from
+        team left join user_team on team.team_id = user_team.team_id
+        where  team_type!= -1
+        GROUP by
+        team.team_id,team_name,team_type,team_backImg,team_status,team_title
+        ORDER By ${orderBy} asc
+    </select>
+    <select id="findAllByKey" resultMap="TeamVoResultMap">
+        select
+        team.team_id,team_name,team_backImg, team_type,team_status,team_title, count(user_team.team_id) as teamuser_num
+        from
+        team  left join  user_team on  team.team_id = user_team.team_id
+        WHERE ${key}  Like  '%${value}%'
+        and  team_type!= -1
+        GROUP  by
+        team.team_id,team_name,team_type,team_backImg,team_status,team_title
+    </select>
+    <select id="findByConditions" resultMap="TeamVoResultMap"
+            parameterType="com.kk.apollo.biz.model.common.FindConditions">
+        select
+        team.team_id,team_name,team_backImg, team_type,team_status,team_title, count(user_team.team_id) as teamuser_num
+        from
+        team left join user_team on team.team_id = user_team.team_id
+        <where>
+            <if test="key != null and key != '' and value!=null and value!=''">
+                ${key} Like '%${value}%'
+            </if>
+            <if test="data != null ">
+                <if test="data.teamName != null  and data.teamName != ''">
+                    AND   team_name Like '%${data.teamName}%'
+                </if>
+                <if test="data.teamType != null and data.teamType != ''">
+                    AND  team_type = #{data.teamType}
+                </if>
+                <if test="data.teamStatus != null and data.teamStatus != ''">
+                    AND  team_status = #{data.teamStatus }
+                </if>
+            </if>
+            AND  team_type!= -1
+            AND  user_team.user_team_type!=-1
+        </where>
+        GROUP by
+        team.team_id,team_name,team_type,team_backImg,team_status,team_title
+        <if test="orderBy != null and orderBy != ''">
+            ORDER By ${orderBy}
+            <if test="isDesc != null and isDesc == 'true'">
+                DESC
+            </if>
+        </if>
+        <if test="pageIndexNum != null">
+            LIMIT #{pageIndexNum},#{pageSize}
+        </if>
+    </select>
+    <select id="countAll" resultType="java.lang.Integer">
+        select
+        count(team_id)
+        from
+        team
+        <where>
+            <if test="key != null and key != '' and value!=null and value!=''">
+                ${key} Like '%${value}%'
+            </if>
+            <if test="data != null ">
+                <if test="data.teamName != null  and data.teamName != ''">
+                    AND team_name Like '%${data.teamName}%'
+                </if>
+                <if test="data.teamType != null and data.teamType != ''">
+                    AND team_type = #{data.teamType}
+                </if>
+                <if test="data.teamStatus != null and data.teamStatus != ''">
+                    AND team_status = #{data.teamStatus }
+                </if>
+            </if>
+            AND  team_type!= -1
+        </where>
+    </select>
+
+</mapper>

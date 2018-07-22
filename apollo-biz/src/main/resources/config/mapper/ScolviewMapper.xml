@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kk.apollo.biz.dao.other.ScolviewMapper" >
+  <resultMap id="BaseResultMap" type="com.kk.apollo.biz.model.other.Scolview" >
+    <id column="scolview_id" property="scolviewId" jdbcType="INTEGER" />
+    <result column="scolview_imgurl" property="scolviewImgurl" jdbcType="VARCHAR" />
+    <result column="scolview_weburl" property="scolviewWeburl" jdbcType="VARCHAR" />
+    <result column="scolview_index" property="scolviewIndex" jdbcType="VARCHAR" />
+    <result column="scolview_key" property="scolviewKey" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    scolview_id, scolview_imgurl, scolview_weburl, scolview_index, scolview_key
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from scolview
+    where scolview_id = #{scolviewId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap"  >
+    select
+    <include refid="Base_Column_List" />
+    from scolview
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from scolview
+    where scolview_id = #{scolviewId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.kk.apollo.biz.model.other.Scolview" >
+    insert into scolview (scolview_id, scolview_imgurl, scolview_weburl, 
+      scolview_index, scolview_key)
+    values (#{scolviewId,jdbcType=INTEGER}, #{scolviewImgurl,jdbcType=VARCHAR}, #{scolviewWeburl,jdbcType=VARCHAR}, 
+      #{scolviewIndex,jdbcType=VARCHAR}, #{scolviewKey,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.kk.apollo.biz.model.other.Scolview" >
+    insert into scolview
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="scolviewId != null" >
+        scolview_id,
+      </if>
+      <if test="scolviewImgurl != null" >
+        scolview_imgurl,
+      </if>
+      <if test="scolviewWeburl != null" >
+        scolview_weburl,
+      </if>
+      <if test="scolviewIndex != null" >
+        scolview_index,
+      </if>
+      <if test="scolviewKey != null" >
+        scolview_key,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="scolviewId != null" >
+        #{scolviewId,jdbcType=INTEGER},
+      </if>
+      <if test="scolviewImgurl != null" >
+        #{scolviewImgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="scolviewWeburl != null" >
+        #{scolviewWeburl,jdbcType=VARCHAR},
+      </if>
+      <if test="scolviewIndex != null" >
+        #{scolviewIndex,jdbcType=VARCHAR},
+      </if>
+      <if test="scolviewKey != null" >
+        #{scolviewKey,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kk.apollo.biz.model.other.Scolview" >
+    update scolview
+    <set >
+      <if test="scolviewImgurl != null" >
+        scolview_imgurl = #{scolviewImgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="scolviewWeburl != null" >
+        scolview_weburl = #{scolviewWeburl,jdbcType=VARCHAR},
+      </if>
+      <if test="scolviewIndex != null" >
+        scolview_index = #{scolviewIndex,jdbcType=VARCHAR},
+      </if>
+      <if test="scolviewKey != null" >
+        scolview_key = #{scolviewKey,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where scolview_id = #{scolviewId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kk.apollo.biz.model.other.Scolview" >
+    update scolview
+    set scolview_imgurl = #{scolviewImgurl,jdbcType=VARCHAR},
+      scolview_weburl = #{scolviewWeburl,jdbcType=VARCHAR},
+      scolview_index = #{scolviewIndex,jdbcType=VARCHAR},
+      scolview_key = #{scolviewKey,jdbcType=VARCHAR}
+    where scolview_id = #{scolviewId,jdbcType=INTEGER}
+  </update>
+</mapper>

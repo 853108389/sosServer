@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kk.apollo.biz.dao.user.MessagesMapper">
+    <resultMap id="MessagesVoMap" type="com.kk.apollo.biz.model.user.MessagesVo">
+        <id column="messages_id" property="messagesId" jdbcType="INTEGER"/>
+        <result column="messages_fromType" property="messagesFromtype" jdbcType="INTEGER"/>
+        <result column="messages_fromId" property="messagesFromid" jdbcType="INTEGER"/>
+        <result column="messages_date" property="messagesDate" jdbcType="TIMESTAMP"/>
+        <result column="messages_content" property="messagesContent" jdbcType="VARCHAR"/>
+        <result column="messages_fromAvatar" property="messagesFromAvatar" jdbcType="VARCHAR"/>
+        <result column="messages_title" property="messagesTitle" jdbcType="VARCHAR"/>
+        <result column="messages_type" property="messagesType" jdbcType="INTEGER"/>
+        <result column="messages_num" property="messagesNum" jdbcType="INTEGER"/>
+        <result column="messages_toType" property="messagesTotype" jdbcType="INTEGER"/>
+        <result column="messages_toId" property="messagesToid" jdbcType="INTEGER"/>
+    </resultMap>
+    <resultMap id="BaseResultMap" type="com.kk.apollo.biz.model.user.Messages">
+        <id column="messages_id" property="messagesId" jdbcType="INTEGER"/>
+        <result column="messages_toType" property="messagesTotype" jdbcType="INTEGER"/>
+        <result column="messages_toId" property="messagesToid" jdbcType="INTEGER"/>
+        <result column="messages_fromType" property="messagesFromtype" jdbcType="INTEGER"/>
+        <result column="messages_fromId" property="messagesFromid" jdbcType="INTEGER"/>
+        <result column="messages_date" property="messagesDate" jdbcType="TIMESTAMP"/>
+        <result column="messages_content" property="messagesContent" jdbcType="VARCHAR"/>
+        <result column="messages_todelete" property="messagesTodelete" jdbcType="INTEGER"/>
+        <result column="messages_fromdelete" property="messagesFromdelete" jdbcType="INTEGER"/>
+        <result column="messages_type" property="messagesType" jdbcType="INTEGER"/>
+        <result column="messages_num" property="messagesNum" jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        messages_id, messages_toType, messages_toId, messages_fromType, messages_fromId,
+        messages_date, messages_content, messages_todelete, messages_fromdelete, messages_type,
+        messages_num
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from messages
+        where messages_id = #{messagesId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from messages
+        where messages_id = #{messagesId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.kk.apollo.biz.model.user.Messages">
+        insert into messages (messages_id, messages_toType, messages_toId,
+        messages_fromType, messages_fromId, messages_date,
+        messages_content, messages_todelete, messages_fromdelete,
+        messages_type, messages_num)
+        values (#{messagesId,jdbcType=INTEGER}, #{messagesTotype,jdbcType=INTEGER}, #{messagesToid,jdbcType=INTEGER},
+        #{messagesFromtype,jdbcType=INTEGER}, #{messagesFromid,jdbcType=INTEGER}, #{messagesDate,jdbcType=TIMESTAMP},
+        #{messagesContent,jdbcType=VARCHAR}, #{messagesTodelete,jdbcType=INTEGER}, #{messagesFromdelete,jdbcType=INTEGER},
+        #{messagesType,jdbcType=INTEGER}, #{messagesNum,jdbcType=INTEGER})
+    </insert>
+    <insert id="insertSelective" parameterType="com.kk.apollo.biz.model.user.Messages">
+        insert into messages
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="messagesId != null">
+                messages_id,
+            </if>
+            <if test="messagesTotype != null">
+                messages_toType,
+            </if>
+            <if test="messagesToid != null">
+                messages_toId,
+            </if>
+            <if test="messagesFromtype != null">
+                messages_fromType,
+            </if>
+            <if test="messagesFromid != null">
+                messages_fromId,
+            </if>
+            <if test="messagesDate != null">
+                messages_date,
+            </if>
+            <if test="messagesContent != null">
+                messages_content,
+            </if>
+            <if test="messagesTodelete != null">
+                messages_todelete,
+            </if>
+            <if test="messagesFromdelete != null">
+                messages_fromdelete,
+            </if>
+            <if test="messagesType != null">
+                messages_type,
+            </if>
+            <if test="messagesNum != null">
+                messages_num,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="messagesId != null">
+                #{messagesId,jdbcType=INTEGER},
+            </if>
+            <if test="messagesTotype != null">
+                #{messagesTotype,jdbcType=INTEGER},
+            </if>
+            <if test="messagesToid != null">
+                #{messagesToid,jdbcType=INTEGER},
+            </if>
+            <if test="messagesFromtype != null">
+                #{messagesFromtype,jdbcType=INTEGER},
+            </if>
+            <if test="messagesFromid != null">
+                #{messagesFromid,jdbcType=INTEGER},
+            </if>
+            <if test="messagesDate != null">
+                #{messagesDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="messagesContent != null">
+                #{messagesContent,jdbcType=VARCHAR},
+            </if>
+            <if test="messagesTodelete != null">
+                #{messagesTodelete,jdbcType=INTEGER},
+            </if>
+            <if test="messagesFromdelete != null">
+                #{messagesFromdelete,jdbcType=INTEGER},
+            </if>
+            <if test="messagesType != null">
+                #{messagesType,jdbcType=INTEGER},
+            </if>
+            <if test="messagesNum != null">
+                #{messagesNum,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.kk.apollo.biz.model.user.Messages">
+        update messages
+        <set>
+            <if test="messagesTotype != null">
+                messages_toType = #{messagesTotype,jdbcType=INTEGER},
+            </if>
+            <if test="messagesToid != null">
+                messages_toId = #{messagesToid,jdbcType=INTEGER},
+            </if>
+            <if test="messagesFromtype != null">
+                messages_fromType = #{messagesFromtype,jdbcType=INTEGER},
+            </if>
+            <if test="messagesFromid != null">
+                messages_fromId = #{messagesFromid,jdbcType=INTEGER},
+            </if>
+            <if test="messagesDate != null">
+                messages_date = #{messagesDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="messagesContent != null">
+                messages_content = #{messagesContent,jdbcType=VARCHAR},
+            </if>
+            <if test="messagesTodelete != null">
+                messages_todelete = #{messagesTodelete,jdbcType=INTEGER},
+            </if>
+            <if test="messagesFromdelete != null">
+                messages_fromdelete = #{messagesFromdelete,jdbcType=INTEGER},
+            </if>
+            <if test="messagesType != null">
+                messages_type = #{messagesType,jdbcType=INTEGER},
+            </if>
+            <if test="messagesNum != null">
+                messages_num = #{messagesNum,jdbcType=INTEGER},
+            </if>
+        </set>
+        where messages_id = #{messagesId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.kk.apollo.biz.model.user.Messages">
+    update messages
+    set messages_toType = #{messagesTotype,jdbcType=INTEGER},
+      messages_toId = #{messagesToid,jdbcType=INTEGER},
+      messages_fromType = #{messagesFromtype,jdbcType=INTEGER},
+      messages_fromId = #{messagesFromid,jdbcType=INTEGER},
+      messages_date = #{messagesDate,jdbcType=TIMESTAMP},
+      messages_content = #{messagesContent,jdbcType=VARCHAR},
+      messages_todelete = #{messagesTodelete,jdbcType=INTEGER},
+      messages_fromdelete = #{messagesFromdelete,jdbcType=INTEGER},
+      messages_type = #{messagesType,jdbcType=INTEGER},
+      messages_num = #{messagesNum,jdbcType=INTEGER}
+    where messages_id = #{messagesId,jdbcType=INTEGER}
+  </update>
+    <select id="findByConditions" resultMap="MessagesVoMap"
+            parameterType="com.kk.apollo.biz.model.common.FindConditions">
+        select messages_id, messages_toId, messages_fromType, messages_fromId, messages_date, messages_content
+        ,messages_title,messages_type,messages_fromAvatar,messages_num,messages_toType
+        from
+        (select messages_id, messages_toId, messages_fromType, messages_fromId, messages_date, messages_content
+        ,messages_type,team_avatar as messages_fromAvatar ,team_name as messages_title,messages_num,messages_toType
+        from messages,team
+        where messages_fromType=0
+        and messages_fromId = team.team_id
+        union all
+        select messages_id, messages_toId, messages_fromType, messages_fromId, messages_date,
+        messages_content,messages_type,
+        user_avatar as messages_fromAvatar ,user_name as messages_title,messages_num,messages_toType
+        from messages ,user
+        where messages_fromType=1
+        and messages_fromId = user.user_id) as table1
+        <where>
+            <if test="data != null ">
+                <if test="data.userId != null  and data.userId != ''">
+                    (messages_toId = #{data.userId}
+                    AND messages_toType = 1 )
+                </if>
+                <if test="data.revteamTypeMap.t1!= null  and data.revteamTypeMap.t1.size()>0">
+                    OR (messages_toId  in
+                    <foreach collection="data.revteamTypeMap.t1" item="t1List"  open="(" separator="," close=")">
+                    #{t1List}
+                    </foreach>
+                    and messages_toType = 0)
+                </if>
+            </if>
+        </where>
+        <if test="orderBy != null and orderBy != ''">
+            ORDER By ${orderBy}
+            <if test="isDesc != null and isDesc == 'true'">
+                DESC
+            </if>
+        </if>
+        <if test="pageIndexNum != null">
+            LIMIT #{pageIndexNum},#{pageSize}
+        </if>
+    </select>
+    <select id="countAll" resultType="java.lang.Integer" parameterType="com.kk.apollo.biz.model.common.FindConditions">
+        select count(messages_id)
+        from messages
+        <where>
+            <if test="key != null and key != '' and value!=null and value!=''">
+                ${key} Like '%${value}%'
+            </if>
+            <if test="data != null ">
+                <if test="data.userId != null  and data.userId != ''">
+                    AND messages_toId = #{data.userId}
+                </if>
+            </if>
+        </where>
+    </select>
+    <select id="hasNewMs" resultType="java.lang.Integer" parameterType="com.kk.apollo.biz.model.auth.Auth">
+        select 1 from messages
+        <where>
+            messages_num >0  and messages_toId =#{userId} and messages_toType = 1
+            <if test="userType != null  and userType != ''">
+--               这里写关于管理员的判断
+            </if>
+        </where>
+        <if test="revteamTypeMap.t1!= null  and revteamTypeMap.t1.size()>0">
+            union all
+            select 1 from messages
+            <where>
+                messages_num >0  and messages_toId  in
+                <foreach collection="revteamTypeMap.t1" item="t1List"  open="(" separator="," close=")">
+                    #{t1List}
+                </foreach>
+                and messages_toType = 0
+            </where>
+        </if>
+    </select>
+    <insert id="addBatchMs" parameterType="java.util.List" >
+        insert into messages
+        <foreach collection="list" item="messages" index="index" separator="," >
+            <if test="index == 0">
+                <trim prefix="(" suffix=")  values " suffixOverrides=",">
+                    <if test="messages.messagesId != null">
+                        messages_id,
+                    </if>
+                    <if test="messages.messagesTotype != null">
+                        messages_toType,
+                    </if>
+                    <if test="messages.messagesToid != null">
+                        messages_toId,
+                    </if>
+                    <if test="messages.messagesFromtype != null">
+                        messages_fromType,
+                    </if>
+                    <if test="messages.messagesFromid != null">
+                        messages_fromId,
+                    </if>
+                    <if test="messages.messagesDate != null">
+                        messages_date,
+                    </if>
+                    <if test="messages.messagesContent != null">
+                        messages_content,
+                    </if>
+                    <if test="messages.messagesTodelete != null">
+                        messages_todelete,
+                    </if>
+                    <if test="messages.messagesFromdelete != null">
+                        messages_fromdelete,
+                    </if>
+                    <if test="messages.messagesType != null">
+                        messages_type,
+                    </if>
+                    <if test="messages.messagesNum != null">
+                        messages_num,
+                    </if>
+                </trim>
+            </if>
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="messages.messagesId != null">
+                    #{messages.messagesId,jdbcType=INTEGER},
+                </if>
+                <if test="messages.messagesTotype != null">
+                    #{messages.messagesTotype,jdbcType=INTEGER},
+                </if>
+                <if test="messages.messagesToid != null">
+                    #{messages.messagesToid,jdbcType=INTEGER},
+                </if>
+                <if test="messages.messagesFromtype != null">
+                    #{messages.messagesFromtype,jdbcType=INTEGER},
+                </if>
+                <if test="messages.messagesFromid != null">
+                    #{messages.messagesFromid,jdbcType=INTEGER},
+                </if>
+                <if test="messages.messagesDate != null">
+                    #{messages.messagesDate,jdbcType=TIMESTAMP},
+                </if>
+                <if test="messages.messagesContent != null">
+                    #{messages.messagesContent,jdbcType=VARCHAR},
+                </if>
+                <if test="messages.messagesTodelete != null">
+                    #{messages.messagesTodelete,jdbcType=INTEGER},
+                </if>
+                <if test="messages.messagesFromdelete != null">
+                    #{messages.messagesFromdelete,jdbcType=INTEGER},
+                </if>
+                <if test="messages.messagesType != null">
+                    #{messages.messagesType,jdbcType=INTEGER},
+                </if>
+                <if test="messages.messagesNum != null">
+                    #{messages.messagesNum,jdbcType=INTEGER},
+                </if>
+            </trim>
+        </foreach>
+    </insert>
+</mapper>

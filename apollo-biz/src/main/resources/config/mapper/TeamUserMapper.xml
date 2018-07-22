@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kk.apollo.biz.dao.team.TeamUserMapper">
+    <resultMap id="BaseResultMap" type="com.kk.apollo.biz.model.team.TeamUser">
+        <id column="department_id" property="departmentId" jdbcType="INTEGER"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="team_id" property="teamId" jdbcType="INTEGER"/>
+        <result column="department_name" property="departmentName" jdbcType="VARCHAR"/>
+        <result column="user_team_type" property="userTeamType" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    department_id, user_id, team_id, department_name, user_team_type
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from user_team
+        where department_id = #{departmentId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from user_team
+    where department_id = #{departmentId,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.kk.apollo.biz.model.team.TeamUser">
+    insert into user_team (department_id, user_id, team_id, 
+      department_name, user_team_type)
+    values (#{departmentId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{teamId,jdbcType=INTEGER}, 
+      #{departmentName,jdbcType=VARCHAR}, #{userTeamType,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.kk.apollo.biz.model.team.TeamUser">
+        insert into user_team
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="departmentId != null">
+                department_id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="teamId != null">
+                team_id,
+            </if>
+            <if test="departmentName != null">
+                department_name,
+            </if>
+            <if test="userTeamType != null">
+                user_team_type,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="departmentId != null">
+                #{departmentId,jdbcType=INTEGER},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="teamId != null">
+                #{teamId,jdbcType=INTEGER},
+            </if>
+            <if test="departmentName != null">
+                #{departmentName,jdbcType=VARCHAR},
+            </if>
+            <if test="userTeamType != null">
+                #{userTeamType,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.kk.apollo.biz.model.team.TeamUser">
+        update user_team
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="teamId != null">
+                team_id = #{teamId,jdbcType=INTEGER},
+            </if>
+            <if test="departmentName != null">
+                department_name = #{departmentName,jdbcType=VARCHAR},
+            </if>
+            <if test="userTeamType != null">
+                user_team_type = #{userTeamType,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where department_id = #{departmentId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.kk.apollo.biz.model.team.TeamUser">
+    update user_team
+    set user_id = #{userId,jdbcType=INTEGER},
+      team_id = #{teamId,jdbcType=INTEGER},
+      department_name = #{departmentName,jdbcType=VARCHAR},
+      user_team_type = #{userTeamType,jdbcType=VARCHAR}
+    where department_id = #{departmentId,jdbcType=INTEGER}
+  </update>
+    <select id="findUserByType" resultMap="BaseResultMap" parameterType="com.kk.apollo.biz.model.team.TeamUser">
+        select
+        <include refid="Base_Column_List"/>
+        from user_team
+        where team_id =#{0}
+        and department_name = #{1}
+        and user_team_type=#{2}
+    </select>
+    <select id="findUserByTeamIdUserId" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List"/>
+        from user_team
+        where team_id =#{0}
+        and  user_id = #{1}
+    </select>
+    <update id="updateByTeamIdAndUserIdSelective" parameterType="com.kk.apollo.biz.model.team.TeamUser">
+        update user_team
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="teamId != null">
+                team_id = #{teamId,jdbcType=INTEGER},
+            </if>
+            <if test="departmentName != null">
+                department_name = #{departmentName,jdbcType=VARCHAR},
+            </if>
+            <if test="userTeamType != null">
+                user_team_type = #{userTeamType,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where team_id = #{teamId}
+        and user_id=#{userId}
+    </update>
+    <update id="updateDepName">
+        update user_team
+        <set>
+            department_name = #{2},
+        </set>
+        where team_id = #{0}
+        and department_name=#{1}
+    </update>
+
+    <select id="isTeamApply" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+        select 1
+        from user_team
+        where   user_id = #{0}
+        and   department_name="主席团"
+        and  user_team_type= -1
+    </select>
+
+    <select id="findUserApply"  resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from user_team
+        where   user_id = #{0}
+        and   department_name="主席团"
+        and  user_team_type= -1
+    </select>
+
+</mapper>

@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kk.apollo.biz.dao.user.UserMapper">
+    <resultMap id="BaseResultMap" type="com.kk.apollo.biz.model.user.User">
+        <id column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="user_stuNo" property="userStuno" jdbcType="VARCHAR"/>
+        <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+        <result column="user_birthday" property="userBirthday" jdbcType="DATE"/>
+        <result column="user_accesstoken" property="userAccesstoken" jdbcType="VARCHAR"/>
+        <result column="user_nickname" property="userNickname" jdbcType="VARCHAR"/>
+        <!--<result column="user_password" property="userPassword" jdbcType="VARCHAR"/>-->
+        <result column="user_avatar" property="userAvatar" jdbcType="VARCHAR"/>
+        <result column="user_backImg" property="userBackimg" jdbcType="VARCHAR"/>
+        <result column="user_phoneNumber" property="userPhonenumber" jdbcType="VARCHAR"/>
+        <result column="user_type" property="userType" jdbcType="VARCHAR"/>
+        <result column="user_signature" property="userSignature" jdbcType="VARCHAR"/>
+        <result column="user_email" property="userEmail" jdbcType="VARCHAR"/>
+        <result column="user_isHidden" property="userIshidden" jdbcType="VARCHAR"/>
+        <result column="user_gender" property="userGender" jdbcType="VARCHAR"/>
+    </resultMap>
+    <resultMap id="UserTeamVo" type="com.kk.apollo.biz.model.user.UserTeamVo">
+        <id column="team_id" property="teamId" jdbcType="INTEGER"/>
+        <result column="team_name" property="teamName" jdbcType="VARCHAR"/>
+        <result column="team_backImg" property="teamBackImg" jdbcType="VARCHAR"/>
+        <result column="team_type" property="teamType" jdbcType="VARCHAR"/>
+        <result column="department_name" property="departmentName" jdbcType="VARCHAR"/>
+        <result column="user_team_type" property="userTeamType" jdbcType="VARCHAR"/>
+    </resultMap>
+    <resultMap id="TeamUserVo" type="com.kk.apollo.biz.model.team.TeamUserVo">
+        <id column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="user_avatar" property="userAvatar" jdbcType="VARCHAR"/>
+        <result column="department_name" property="departmentName" jdbcType="VARCHAR"/>
+        <result column="user_team_type" property="userTeamType" jdbcType="VARCHAR"/>
+        <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    user_id, user_stuNo, user_name, user_birthday, user_nickname,
+    --user_accesstoken ,user_password,
+    user_avatar, user_backImg, user_phoneNumber, user_type, user_signature, user_email, 
+    user_isHidden, user_gender
+  </sql>
+    <sql id="Base_Column_List2">
+        user_id, user_stuNo, user_name, user_birthday, user_accesstoken, user_nickname,
+        --user_password,
+        user_avatar, user_backImg, user_phoneNumber, user_type, user_signature, user_email,
+        user_isHidden, user_gender
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from user
+        where user_id = #{userId,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectByUnAndPw" resultMap="BaseResultMap" parameterType="com.kk.apollo.biz.model.user.User">
+        select
+        <include refid="Base_Column_List"/>
+        from user
+        where user_id = #{userId,jdbcType=INTEGER}
+        and user_password = #{userPassword,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from user
+    where user_id = #{userId,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.kk.apollo.biz.model.user.User">
+    insert into user (user_id, user_stuNo, user_name, 
+      user_birthday, user_accesstoken, user_nickname, 
+      user_password, user_avatar, user_backImg, 
+      user_phoneNumber, user_type, user_signature, 
+      user_email, user_isHidden, user_gender
+      )
+    values (#{userId,jdbcType=INTEGER}, #{userStuno,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, 
+      #{userBirthday,jdbcType=DATE}, #{userAccesstoken,jdbcType=VARCHAR}, #{userNickname,jdbcType=VARCHAR}, 
+      #{userPassword,jdbcType=VARCHAR}, #{userAvatar,jdbcType=VARCHAR}, #{userBackimg,jdbcType=VARCHAR}, 
+      #{userPhonenumber,jdbcType=VARCHAR}, #{userType,jdbcType=VARCHAR}, #{userSignature,jdbcType=VARCHAR}, 
+      #{userEmail,jdbcType=VARCHAR}, #{userIshidden,jdbcType=VARCHAR}, #{userGender,jdbcType=VARCHAR}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.kk.apollo.biz.model.user.User">
+        insert into user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="userStuno != null">
+                user_stuNo,
+            </if>
+            <if test="userName != null">
+                user_name,
+            </if>
+            <if test="userBirthday != null">
+                user_birthday,
+            </if>
+            <if test="userAccesstoken != null">
+                user_accesstoken,
+            </if>
+            <if test="userNickname != null">
+                user_nickname,
+            </if>
+            <if test="userPassword != null">
+                user_password,
+            </if>
+            <if test="userAvatar != null">
+                user_avatar,
+            </if>
+            <if test="userBackimg != null">
+                user_backImg,
+            </if>
+            <if test="userPhonenumber != null">
+                user_phoneNumber,
+            </if>
+            <if test="userType != null">
+                user_type,
+            </if>
+            <if test="userSignature != null">
+                user_signature,
+            </if>
+            <if test="userEmail != null">
+                user_email,
+            </if>
+            <if test="userIshidden != null">
+                user_isHidden,
+            </if>
+            <if test="userGender != null">
+                user_gender,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="userStuno != null">
+                #{userStuno,jdbcType=VARCHAR},
+            </if>
+            <if test="userName != null">
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="userBirthday != null">
+                #{userBirthday,jdbcType=DATE},
+            </if>
+            <if test="userAccesstoken != null">
+                #{userAccesstoken,jdbcType=VARCHAR},
+            </if>
+            <if test="userNickname != null">
+                #{userNickname,jdbcType=VARCHAR},
+            </if>
+            <if test="userPassword != null">
+                #{userPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="userAvatar != null">
+                #{userAvatar,jdbcType=VARCHAR},
+            </if>
+            <if test="userBackimg != null">
+                #{userBackimg,jdbcType=VARCHAR},
+            </if>
+            <if test="userPhonenumber != null">
+                #{userPhonenumber,jdbcType=VARCHAR},
+            </if>
+            <if test="userType != null">
+                #{userType,jdbcType=VARCHAR},
+            </if>
+            <if test="userSignature != null">
+                #{userSignature,jdbcType=VARCHAR},
+            </if>
+            <if test="userEmail != null">
+                #{userEmail,jdbcType=VARCHAR},
+            </if>
+            <if test="userIshidden != null">
+                #{userIshidden,jdbcType=VARCHAR},
+            </if>
+            <if test="userGender != null">
+                #{userGender,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.kk.apollo.biz.model.user.User">
+        update user
+        <set>
+            <if test="userStuno != null">
+                user_stuNo = #{userStuno,jdbcType=VARCHAR},
+            </if>
+            <if test="userName != null">
+                user_name = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="userBirthday != null">
+                user_birthday = #{userBirthday,jdbcType=DATE},
+            </if>
+            <if test="userAccesstoken != null">
+                user_accesstoken = #{userAccesstoken,jdbcType=VARCHAR},
+            </if>
+            <if test="userNickname != null">
+                user_nickname = #{userNickname,jdbcType=VARCHAR},
+            </if>
+            <if test="userPassword != null">
+                user_password = #{userPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="userAvatar != null">
+                user_avatar = #{userAvatar,jdbcType=VARCHAR},
+            </if>
+            <if test="userBackimg != null">
+                user_backImg = #{userBackimg,jdbcType=VARCHAR},
+            </if>
+            <if test="userPhonenumber != null">
+                user_phoneNumber = #{userPhonenumber,jdbcType=VARCHAR},
+            </if>
+            <if test="userType != null">
+                user_type = #{userType,jdbcType=VARCHAR},
+            </if>
+            <if test="userSignature != null">
+                user_signature = #{userSignature,jdbcType=VARCHAR},
+            </if>
+            <if test="userEmail != null">
+                user_email = #{userEmail,jdbcType=VARCHAR},
+            </if>
+            <if test="userIshidden != null">
+                user_isHidden = #{userIshidden,jdbcType=VARCHAR},
+            </if>
+            <if test="userGender != null">
+                user_gender = #{userGender,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where user_id = #{userId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.kk.apollo.biz.model.user.User">
+    update user
+    set user_stuNo = #{userStuno,jdbcType=VARCHAR},
+      user_name = #{userName,jdbcType=VARCHAR},
+      user_birthday = #{userBirthday,jdbcType=DATE},
+      user_accesstoken = #{userAccesstoken,jdbcType=VARCHAR},
+      user_nickname = #{userNickname,jdbcType=VARCHAR},
+      user_password = #{userPassword,jdbcType=VARCHAR},
+      user_avatar = #{userAvatar,jdbcType=VARCHAR},
+      user_backImg = #{userBackimg,jdbcType=VARCHAR},
+      user_phoneNumber = #{userPhonenumber,jdbcType=VARCHAR},
+      user_type = #{userType,jdbcType=VARCHAR},
+      user_signature = #{userSignature,jdbcType=VARCHAR},
+      user_email = #{userEmail,jdbcType=VARCHAR},
+      user_isHidden = #{userIshidden,jdbcType=VARCHAR},
+      user_gender = #{userGender,jdbcType=VARCHAR}
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+
+    <select id="getUserByUnPw" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List2"/>
+        from user
+        where
+        user_stuNo = #{0}
+        AND
+        user_password = #{1}
+    </select>
+
+    <select id="selectUsersByType" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List2"/>
+        from user
+        where
+        user_type = #{0}
+    </select>
+
+    <select id="findUserByStuNo" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from user
+        where
+        user_stuNo = #{0}
+    </select>
+
+    <select id="findTeamByUserId" resultMap="UserTeamVo">
+        select
+        team.team_id as team_id,team_name,team_backImg, team_type, department_name, user_team_type
+        from
+        user,team,user_team
+        where
+        user.user_id= user_team.user_id
+        AND
+        user_team.team_id= team.team_id
+        AND
+        user.user_id = #{0}
+        AND
+        user_team_type != -1
+    </select>
+
+    <select id="findUserByTeamId" resultMap="TeamUserVo">
+        select
+        user.user_id  as user_id, user_avatar ,department_name, user_team_type, user_name
+        from
+        user,team,user_team
+        where
+        user.user_id= user_team.user_id
+        AND
+        user_team.team_id= team.team_id
+        AND
+        team.team_id = #{0}
+    </select>
+
+    <select id="findAllUserDepByTeamId" resultMap="TeamUserVo">
+        select
+        user.user_id  as user_id, user_avatar ,department_name, user_team_type, user_name
+        from
+        user,team,user_team
+        where
+        user.user_id= user_team.user_id
+        AND
+        user_team.team_id= team.team_id
+        AND
+        team.team_id = #{0}
+	    AND
+	    user_team .department_name = #{1}
+	    AND
+	    user_team_type != -1
+	    ORDER BY
+	    user_team_type
+    </select>
+
+    <select id="fetchUserByIdVo" resultMap="BaseResultMap">
+        select
+          user_stuNo,
+          user_name,
+          user_birthday,
+          user_nickname,
+          user_avatar,
+          user_backImg,
+          user_phoneNumber,
+          user_type,
+          user_signature,
+          user_email,
+          user_gender
+        from user
+        where user_id = #{0}
+    </select>
+
+    <select id="getLeaderId" resultType="java.lang.Integer">
+      select
+       user_id
+      from
+       user_team
+      where
+      user_team.team_id=1
+      and
+        user_team_type = #{0};
+    </select>
+
+    <select id="getUserTeamAndType" resultType="java.util.Map" parameterType="java.lang.Integer">
+      select Cast(user_team.team_id as CHAR ) as teamId,user_team_type as userTeamType
+      from user_team ,user
+      where
+      user.user_id = user_team.user_id and user.user_id =#{0};
+    </select>
+
+
+</mapper>

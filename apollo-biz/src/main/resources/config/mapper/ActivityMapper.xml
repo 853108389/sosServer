@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kk.apollo.biz.dao.activity.ActivityMapper">
+    <resultMap id="BaseResultMap" type="com.kk.apollo.biz.model.activity.Activity">
+        <id column="activity_id" property="activityId" jdbcType="INTEGER"/>
+        <result column="activity_name" property="activityName" jdbcType="VARCHAR"/>
+        <result column="activity_pushTime" property="activityPushtime" jdbcType="TIMESTAMP"/>
+        <result column="activity_lovers" property="activityLovers" jdbcType="INTEGER"/>
+        <result column="activity_title" property="activityTitle" jdbcType="VARCHAR"/>
+        <result column="activity_introduction" property="activityIntroduction" jdbcType="VARCHAR"/>
+        <result column="activity_duringTime" property="activityDuringtime" jdbcType="VARCHAR"/>
+        <result column="activity_place" property="activityPlace" jdbcType="VARCHAR"/>
+        <result column="activity_way" property="activityWay" jdbcType="VARCHAR"/>
+        <result column="activity_memo" property="activityMemo" jdbcType="VARCHAR"/>
+        <result column="activity_require" property="activityRequire" jdbcType="VARCHAR"/>
+        <result column="activity_connectway" property="activityConnectway" jdbcType="VARCHAR"/>
+        <result column="activity_image" property="activityImage" jdbcType="VARCHAR"/>
+        <result column="activity_holdingTime" property="activityHoldingtime" jdbcType="DATE"/>
+        <result column="activity_endTime" property="activityEndtime" jdbcType="DATE"/>
+        <result column="activity_backImg" property="activityBackimg" jdbcType="VARCHAR"/>
+        <result column="team_id" property="teamId" jdbcType="INTEGER"/>
+    </resultMap>
+    <resultMap id="ActivityVoMap" type="com.kk.apollo.biz.model.activity.ActivityVo">
+        <id column="activity_id" property="activityId" jdbcType="INTEGER"/>
+        <result column="activity_name" property="activityName" jdbcType="VARCHAR"/>
+        <result column="activity_pushTime" property="activityPushtime" jdbcType="TIMESTAMP"/>
+        <result column="activity_lovers" property="activityLovers" jdbcType="INTEGER"/>
+        <result column="activity_title" property="activityTitle" jdbcType="VARCHAR"/>
+        <result column="activity_backImg" property="activityBackimg" jdbcType="VARCHAR"/>
+        <result column="team_avatar" property="teamAvatar" jdbcType="VARCHAR"/>
+        <result column="comment_num" property="commentNum" jdbcType="VARCHAR"/>
+    </resultMap>
+    <resultMap id="ActivityDetailMap" type="com.kk.apollo.biz.model.activity.ActivityDetail">
+        <id column="activity_id" property="activityId" jdbcType="INTEGER"/>
+        <result column="activity_name" property="activityName" jdbcType="VARCHAR"/>
+        <result column="activity_pushTime" property="activityPushtime" jdbcType="TIMESTAMP"/>
+        <result column="activity_lovers" property="activityLovers" jdbcType="INTEGER"/>
+        <result column="activity_title" property="activityTitle" jdbcType="VARCHAR"/>
+        <result column="activity_introduction" property="activityIntroduction" jdbcType="VARCHAR"/>
+        <result column="activity_duringTime" property="activityDuringtime" jdbcType="VARCHAR"/>
+        <result column="activity_place" property="activityPlace" jdbcType="VARCHAR"/>
+        <result column="activity_way" property="activityWay" jdbcType="VARCHAR"/>
+        <result column="activity_memo" property="activityMemo" jdbcType="VARCHAR"/>
+        <result column="activity_require" property="activityRequire" jdbcType="VARCHAR"/>
+        <result column="activity_connectway" property="activityConnectway" jdbcType="VARCHAR"/>
+        <result column="activity_image" property="activityImage" jdbcType="VARCHAR"/>
+        <result column="activity_holdingTime" property="activityHoldingtime" jdbcType="DATE"/>
+        <result column="activity_endTime" property="activityEndtime" jdbcType="DATE"/>
+        <result column="activity_backImg" property="activityBackimg" jdbcType="VARCHAR"/>
+        <result column="team_id" property="teamId" jdbcType="INTEGER"/>
+        <result column="team_name" property="teamName" jdbcType="VARCHAR"/>
+        <result column="team_avatar" property="teamAvatar" jdbcType="VARCHAR"/>
+        <result column="comment_num" property="commentNum" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    activity_id, activity_name, DATE_FORMAT(activity_pushTime,"%Y-%m-%d") as activity_pushTime, activity_title, activity_introduction,
+    activity_duringTime, activity_place, activity_way, activity_memo, activity_require,
+    activity_connectway, activity_image, activity_holdingTime, activity_endTime, activity_backImg,
+    team_id,(select count(id) from user_activity where activity_id = activity.activity_id and islove =1) as activity_lovers
+   </sql>
+    <sql id="Base_Activity_Lovers">
+   (select count(id) from user_activity where activity_id = activity.activity_id and islove =1) as activity_lovers
+   </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from activity
+        where activity_id = #{activityId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from activity
+    where activity_id = #{activityId,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.kk.apollo.biz.model.activity.Activity">
+    insert into activity (activity_id, activity_name, activity_pushTime,
+    activity_lovers, activity_title, activity_introduction,
+    activity_duringTime, activity_place, activity_way,
+    activity_memo, activity_require, activity_connectway,
+    activity_image, activity_holdingTime, activity_endTime,
+    activity_backImg, team_id)
+    values (#{activityId,jdbcType=INTEGER}, #{activityName,jdbcType=VARCHAR}, #{activityPushtime,jdbcType=TIMESTAMP},
+    #{activityLovers,jdbcType=INTEGER}, #{activityTitle,jdbcType=VARCHAR}, #{activityIntroduction,jdbcType=VARCHAR},
+    #{activityDuringtime,jdbcType=VARCHAR}, #{activityPlace,jdbcType=VARCHAR}, #{activityWay,jdbcType=VARCHAR},
+    #{activityMemo,jdbcType=VARCHAR}, #{activityRequire,jdbcType=VARCHAR}, #{activityConnectway,jdbcType=VARCHAR},
+    #{activityImage,jdbcType=VARCHAR}, #{activityHoldingtime,jdbcType=DATE}, #{activityEndtime,jdbcType=DATE},
+    #{activityBackimg,jdbcType=VARCHAR}, #{teamId,jdbcType=INTEGER})
+  </insert>
+    <insert id="insertSelective" parameterType="com.kk.apollo.biz.model.activity.Activity">
+        insert into activity
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="activityId != null">
+                activity_id,
+            </if>
+            <if test="activityName != null">
+                activity_name,
+            </if>
+            <if test="activityPushtime != null">
+                activity_pushTime,
+            </if>
+            <if test="activityLovers != null">
+                activity_lovers,
+            </if>
+            <if test="activityTitle != null">
+                activity_title,
+            </if>
+            <if test="activityIntroduction != null">
+                activity_introduction,
+            </if>
+            <if test="activityDuringtime != null">
+                activity_duringTime,
+            </if>
+            <if test="activityPlace != null">
+                activity_place,
+            </if>
+            <if test="activityWay != null">
+                activity_way,
+            </if>
+            <if test="activityMemo != null">
+                activity_memo,
+            </if>
+            <if test="activityRequire != null">
+                activity_require,
+            </if>
+            <if test="activityConnectway != null">
+                activity_connectway,
+            </if>
+            <if test="activityImage != null">
+                activity_image,
+            </if>
+            <if test="activityHoldingtime != null">
+                activity_holdingTime,
+            </if>
+            <if test="activityEndtime != null">
+                activity_endTime,
+            </if>
+            <if test="activityBackimg != null">
+                activity_backImg,
+            </if>
+            <if test="teamId != null">
+                team_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="activityId != null">
+                #{activityId,jdbcType=INTEGER},
+            </if>
+            <if test="activityName != null">
+                #{activityName,jdbcType=VARCHAR},
+            </if>
+            <if test="activityPushtime != null">
+                #{activityPushtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="activityLovers != null">
+                #{activityLovers,jdbcType=INTEGER},
+            </if>
+            <if test="activityTitle != null">
+                #{activityTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="activityIntroduction != null">
+                #{activityIntroduction,jdbcType=VARCHAR},
+            </if>
+            <if test="activityDuringtime != null">
+                #{activityDuringtime,jdbcType=VARCHAR},
+            </if>
+            <if test="activityPlace != null">
+                #{activityPlace,jdbcType=VARCHAR},
+            </if>
+            <if test="activityWay != null">
+                #{activityWay,jdbcType=VARCHAR},
+            </if>
+            <if test="activityMemo != null">
+                #{activityMemo,jdbcType=VARCHAR},
+            </if>
+            <if test="activityRequire != null">
+                #{activityRequire,jdbcType=VARCHAR},
+            </if>
+            <if test="activityConnectway != null">
+                #{activityConnectway,jdbcType=VARCHAR},
+            </if>
+            <if test="activityImage != null">
+                #{activityImage,jdbcType=VARCHAR},
+            </if>
+            <if test="activityHoldingtime != null">
+                #{activityHoldingtime,jdbcType=DATE},
+            </if>
+            <if test="activityEndtime != null">
+                #{activityEndtime,jdbcType=DATE},
+            </if>
+            <if test="activityBackimg != null">
+                #{activityBackimg,jdbcType=VARCHAR},
+            </if>
+            <if test="teamId != null">
+                #{teamId,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.kk.apollo.biz.model.activity.Activity">
+        update activity
+        <set>
+            <if test="activityName != null">
+                activity_name = #{activityName,jdbcType=VARCHAR},
+            </if>
+            <if test="activityPushtime != null">
+                activity_pushTime = #{activityPushtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="activityLovers != null">
+                activity_lovers = #{activityLovers,jdbcType=INTEGER},
+            </if>
+            <if test="activityTitle != null">
+                activity_title = #{activityTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="activityIntroduction != null">
+                activity_introduction = #{activityIntroduction,jdbcType=VARCHAR},
+            </if>
+            <if test="activityDuringtime != null">
+                activity_duringTime = #{activityDuringtime,jdbcType=VARCHAR},
+            </if>
+            <if test="activityPlace != null">
+                activity_place = #{activityPlace,jdbcType=VARCHAR},
+            </if>
+            <if test="activityWay != null">
+                activity_way = #{activityWay,jdbcType=VARCHAR},
+            </if>
+            <if test="activityMemo != null">
+                activity_memo = #{activityMemo,jdbcType=VARCHAR},
+            </if>
+            <if test="activityRequire != null">
+                activity_require = #{activityRequire,jdbcType=VARCHAR},
+            </if>
+            <if test="activityConnectway != null">
+                activity_connectway = #{activityConnectway,jdbcType=VARCHAR},
+            </if>
+            <if test="activityImage != null">
+                activity_image = #{activityImage,jdbcType=VARCHAR},
+            </if>
+            <if test="activityHoldingtime != null">
+                activity_holdingTime = #{activityHoldingtime,jdbcType=DATE},
+            </if>
+            <if test="activityEndtime != null">
+                activity_endTime = #{activityEndtime,jdbcType=DATE},
+            </if>
+            <if test="activityBackimg != null">
+                activity_backImg = #{activityBackimg,jdbcType=VARCHAR},
+            </if>
+            <if test="teamId != null">
+                team_id = #{teamId,jdbcType=INTEGER},
+            </if>
+        </set>
+        where activity_id = #{activityId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.kk.apollo.biz.model.activity.Activity">
+    update activity
+    set activity_name = #{activityName,jdbcType=VARCHAR},
+    activity_pushTime = #{activityPushtime,jdbcType=TIMESTAMP},
+    activity_lovers = #{activityLovers,jdbcType=INTEGER},
+    activity_title = #{activityTitle,jdbcType=VARCHAR},
+    activity_introduction = #{activityIntroduction,jdbcType=VARCHAR},
+    activity_duringTime = #{activityDuringtime,jdbcType=VARCHAR},
+    activity_place = #{activityPlace,jdbcType=VARCHAR},
+    activity_way = #{activityWay,jdbcType=VARCHAR},
+    activity_memo = #{activityMemo,jdbcType=VARCHAR},
+    activity_require = #{activityRequire,jdbcType=VARCHAR},
+    activity_connectway = #{activityConnectway,jdbcType=VARCHAR},
+    activity_image = #{activityImage,jdbcType=VARCHAR},
+    activity_holdingTime = #{activityHoldingtime,jdbcType=DATE},
+    activity_endTime = #{activityEndtime,jdbcType=DATE},
+    activity_backImg = #{activityBackimg,jdbcType=VARCHAR},
+    team_id = #{teamId,jdbcType=INTEGER}
+    where activity_id = #{activityId,jdbcType=INTEGER}
+  </update>
+    <select id="findActivityByTeamId" resultMap="ActivityVoMap">
+        select
+        activity.activity_id,activity_name,DATE_FORMAT(activity_pushTime,"%Y-%m-%d") as
+        activity_pushTime,activity_title,
+        activity_backImg,count(comment.activity_id) as comment_num,
+        <include refid="Base_Activity_Lovers"/>
+        from activity
+        left join comment on comment.activity_id = activity.activity_id
+        left join team on activity.team_id = team.team_id
+        where team.team_id = #{0}
+        group by activity.activity_id
+        ORDER by activity_pushTime
+        DESC
+    </select>
+    <select id="findAll" resultMap="ActivityVoMap">
+        select
+        activity_id,activity_name,DATE_FORMAT(activity_pushTime,"%Y-%m-%d") as
+        activity_pushTime,activity_title,activity_backImg,team_avatar,
+        <include refid="Base_Activity_Lovers"/>
+        from
+        activity,team
+        WHERE
+        activity.team_id =team.team_id
+
+    </select>
+    <select id="findActvityById" resultMap="ActivityDetailMap">
+        select
+        activity.activity_id, activity_name, DATE_FORMAT(activity_pushTime,"%Y-%m-%d") as activity_pushTime,
+        activity_title, activity_introduction,
+        activity_duringTime, activity_place, activity_way, activity_memo, activity_require,
+        activity_connectway, activity_image, activity_holdingTime, activity_endTime, activity_backImg,
+        activity.team_id,team_name, count(comment_content) as comment_num,team_avatar,
+        (select count(id) from user_activity where activity_id =  #{0} and islove =1) as activity_lovers
+        from
+        activity,team,comment
+        WHERE
+        activity.activity_id = #{0}
+        AND
+        activity.team_id =team.team_id
+        AND
+        comment.activity_id = activity.activity_id
+    </select>
+    <select id="findByConditions" resultMap="ActivityVoMap"
+            parameterType="com.kk.apollo.biz.model.common.FindConditions">
+        select
+        activity.activity_id,activity_name, DATE_FORMAT(activity_pushTime,"%Y-%m-%d") as activity_pushTime
+        ,activity_title,
+        activity_backImg,team_avatar,count(comment.activity_id) as comment_num,
+        <include refid="Base_Activity_Lovers"/>
+        from activity
+        left join team on activity.team_id =team.team_id
+        left join comment on comment.activity_id = activity.activity_id
+        <where>
+            <if test="key != null and key != '' and value!=null and value!=''">
+                ${key} Like '%${value}%'
+            </if>
+            <if test="data != null ">
+                <if test="data.activityName != null  and data.activityName != ''">
+                    AND activity_name Like '%${data.activitName}%'
+                </if>
+            </if>
+        </where>
+        Group by
+        activity.activity_id,activity_name,activity_pushTime,activity_title,activity_lovers,activity_backImg,team_avatar
+        <if test="orderBy != null and orderBy != ''">
+            ORDER By ${orderBy}
+            <if test="isDesc != null and isDesc == 'true'">
+                DESC
+            </if>
+        </if>
+        <if test="pageIndexNum != null">
+            LIMIT #{pageIndexNum},#{pageSize}
+        </if>
+    </select>
+    <select id="countAll" resultType="java.lang.Integer" parameterType="com.kk.apollo.biz.model.common.FindConditions">
+        select
+        count(activity_id)
+        from
+        activity
+        <where>
+            <if test="key != null and key != '' and value!=null and value!=''">
+                ${key} Like '%${value}%'
+            </if>
+            <if test="data != null ">
+                <if test="data.activity_name != null  and data.activity_name != ''">
+                    AND activity_name Like '%${data.activity_name}%'
+                </if>
+            </if>
+        </where>
+    </select>
+    <select id="findLatestActivity" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        activity
+        <where>
+            team_id = #{0}
+        </where>
+        ORDER By
+        activity_pushTime desc
+        LIMIT 0,#{1}
+    </select>
+
+</mapper>
